@@ -5,7 +5,7 @@ This docker image contains the neccessary dependencies to run the [YatCPU](https
 ## Run
 
 ```bash
-docker run -it --rm -v howardlau1999/yatcpu:latest
+docker run -it --rm howardlau1999/yatcpu:latest
 sbt test
 ```
 
