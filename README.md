@@ -9,8 +9,11 @@ docker run -it --rm howardlau1999/yatcpu:latest
 sbt test
 ```
 
-If you prefer to modify your code outside the container, just mount the folder on the host machine.
+Please note that if you don't mount a host folder, all changes made in the container will be lost once it is stopped. 
+
+To persist your changes, please clone the repository first and mount it in the container every time you run the container.
 
 ```bash
-docker run -it --rm -v /path/to/yatcpu:/root/yatcpu howardlau1999/yatcpu:latest
+git clone https://github.com/howardlau1999/yatcpu
+docker run -it --rm -v yatcpu:/root/yatcpu howardlau1999/yatcpu:latest
 ```
