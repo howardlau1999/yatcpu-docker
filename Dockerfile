@@ -1,5 +1,5 @@
 FROM debian:11
-RUN apt update && apt install -y scala gnupg curl git perl python3 make autoconf clang llvm cmake flex bison libgoogle-perftools-dev numactl perl-doc
+RUN apt update && apt install -y scala gnupg curl git perl python3 make autoconf clang llvm lld cmake flex bison libgoogle-perftools-dev numactl perl-doc
 WORKDIR /usr/src/
 RUN git clone --depth 1 -b stable https://github.com/verilator/verilator && cd verilator && autoconf && autoupdate && ./configure && make -j `nproc` && make install && rm -rf /usr/src/verilator
 RUN curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | gpg --dearmor -o /usr/share/keyrings/scalasbt-archive-keyring.gpg
