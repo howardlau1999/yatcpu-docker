@@ -10,7 +10,7 @@ RUN apt update && apt install -y sbt
 
 # Clone repositories
 WORKDIR /root
-ADD https://api.github.com/repos/riscv-non-isa/riscv-arch-test/git/refs/heads/main .riscv-arch-test-git-info.json
+ADD https://api.github.com/repos/riscv-non-isa/riscv-arch-test/git/refs/heads/master .riscv-arch-test-git-info.json
 RUN git clone --depth 1 https://github.com/riscv-non-isa/riscv-arch-test
 ADD https://api.github.com/repos/howardlau1999/yatcpu/git/refs/heads/main .yatcpu-git-info.json
 RUN git clone --depth 1 https://github.com/howardlau1999/yatcpu
