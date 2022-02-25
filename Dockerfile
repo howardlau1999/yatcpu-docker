@@ -17,4 +17,5 @@ RUN git clone --depth 1 https://github.com/howardlau1999/yatcpu
 
 # Let sbt download necessary packages
 RUN cd yatcpu && sbt update
+RUN cd yatcpu && sbt compile
 ENTRYPOINT [ "/bin/bash" ]
