@@ -11,7 +11,7 @@ RUN apt-get clean autoclean && apt-get autoremove --yes && rm -rf /var/lib/{apt,
 
 # Clone repositories
 WORKDIR /root
-ADD https://api.github.com/repos/riscv-non-isa/riscv-arch-test/git/refs/heads/master .riscv-arch-test-git-info.json
+ADD https://api.github.com/repos/riscv-non-isa/riscv-arch-test/git/refs/tags/2.6.1 .riscv-arch-test-git-info.json
 RUN git clone -b 2.6.1 --depth 1 https://github.com/riscv-non-isa/riscv-arch-test
 ADD https://api.github.com/repos/howardlau1999/yatcpu/git/refs/heads/main .yatcpu-git-info.json
 RUN git clone --depth 1 https://github.com/howardlau1999/yatcpu
