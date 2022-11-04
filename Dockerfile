@@ -1,17 +1,18 @@
 FROM debian:11
 
 # Install toolchain
-RUN apt update && apt install -y gcc-riscv64-unknown-elf binutils-riscv64-unknown-elf scala gnupg curl git perl python3 make autoconf clang llvm lld cmake flex bison libgoogle-perftools-dev numactl perl-doc
-WORKDIR /usr/src/
-RUN git clone --depth 1 -b stable https://github.com/verilator/verilator && cd verilator && autoconf && autoupdate && ./configure && make -j `nproc` && make install && rm -rf /usr/src/verilator
-RUN curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | gpg --dearmor -o /usr/share/keyrings/scalasbt-archive-keyring.gpg
-RUN echo "deb [signed-by=/usr/share/keyrings/scalasbt-archive-keyring.gpg] https://repo.scala-sbt.org/scalasbt/debian all main" > /etc/apt/sources.list.d/sbt.list
-RUN apt update && apt install -y sbt
+FROM sbtscala/scala-sbt:eclipse-temurin-18.0.1_1.6.2_2.13.8
+ARG CLANG_VERSION=15
+RUN apt-get update && apt-get install -y curl lsb-release wget software-properties-common gnupg git
+RUN curl -fsSL https://apt.llvm.org/llvm.sh | bash -s -- $CLANG_VERSION all
+RUN curl -fsSL https://gist.githubusercontent.com/howardlau1999/7ea2cffedc0491c46fa14e1f2355a9a8/raw/7886c0344e8f010a9d515a3de20983e604ae5a0a/update-alternatives-clang.sh | bash -s -- $CLANG_VERSION 100
+RUN apt-get install -y verilator make cmake g++
+RUN apt-get clean autoclean && apt-get autoremove --yes && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 # Clone repositories
 WORKDIR /root
 ADD https://api.github.com/repos/riscv-non-isa/riscv-arch-test/git/refs/heads/master .riscv-arch-test-git-info.json
-RUN git clone --depth 1 https://github.com/riscv-non-isa/riscv-arch-test
+RUN git clone -b 2.6.1 --depth 1 https://github.com/riscv-non-isa/riscv-arch-test
 ADD https://api.github.com/repos/howardlau1999/yatcpu/git/refs/heads/main .yatcpu-git-info.json
 RUN git clone --depth 1 https://github.com/howardlau1999/yatcpu
 
